@@ -18,18 +18,18 @@ FROM <image>:<tag>
 
 指定基础image为该image的一个tag版本。
 
-####（2）MAINTAINER（用来指定镜像创建者信息）
+#### （2）MAINTAINER（用来指定镜像创建者信息）
 构建指令，用于将image的制作者相关的信息写入到image中。当我们对该image执行docker inspect命令时，输出中有相应的字段记录该信息。
 [plain] view plain copy
 MAINTAINER <name>  
 
-####（3）RUN（安装软件用）
+#### （3）RUN（安装软件用）
 构建指令，RUN可以运行任何被基础image支持的命令。如基础image选择了ubuntu，那么软件管理部分只能使用ubuntu的命令。
 [plain] view plain copy
 RUN <command> (the command is run in a shell - `/bin/sh -c`)  
 RUN ["executable", "param1", "param2" ... ]  (exec form)  
 
-####（4）CMD（设置container启动时执行的操作）
+#### （4）CMD（设置container启动时执行的操作）
 设置指令，用于container启动时指定的操作。该操作可以是执行自定义脚本，也可以是执行系统命令。该指令只能在文件中存在一次，如果有多个，则只执行最后一条。
 [plain] view plain copy
 CMD ["executable","param1","param2"] (like an exec, this is the preferred form)  
@@ -48,7 +48,7 @@ ENTRYPOINT command param1 param2 (as a shell)
 该指令的使用分为两种情况，一种是独自使用，另一种和CMD指令配合使用。
 当独自使用时，如果你还使用了CMD命令且CMD是一个完整的可执行的命令，那么CMD指令和ENTRYPOINT会互相覆盖只有最后一个CMD或者ENTRYPOINT有效。
 [plain] view plain copy
-# CMD指令将不会被执行，只有ENTRYPOINT指令被执行  
+\# CMD指令将不会被执行，只有ENTRYPOINT指令被执行  
 CMD echo “Hello, World!”  
 ENTRYPOINT ls -l  
 另一种用法和CMD指令配合使用来指定ENTRYPOINT的默认参数，这时CMD指令不是一个完整的可执行命令，仅仅是参数部分；ENTRYPOINT指令只能使用JSON方式指定执行命令，而不能指定参数。
@@ -60,7 +60,7 @@ ENTRYPOINT ["/usr/bin/ls"]
 #### （6）USER（设置container容器的用户）
 设置指令，设置启动容器的用户，默认是root用户。
 [plain] view plain copy
-# 指定memcached的运行用户  
+\# 指定memcached的运行用户  
 ENTRYPOINT ["memcached"]  
 USER daemon  
 或  
@@ -73,16 +73,16 @@ ENTRYPOINT ["memcached", "-u", "daemon"]
 EXPOSE <port> [<port>...]  
 
 [plain] view plain copy
-# 映射一个端口  
+\# 映射一个端口  
 EXPOSE port1  
-# 相应的运行容器使用的命令  
+\# 相应的运行容器使用的命令  
 docker run -p port1 image  
   
-# 映射多个端口  
+\# 映射多个端口  
 EXPOSE port1 port2 port3  
 # 相应的运行容器使用的命令  
 docker run -p port1 -p port2 -p port3 image  
-# 还可以指定需要映射到宿主机器上的某个端口号  
+\# 还可以指定需要映射到宿主机器上的某个端口号  
 docker run -p host_port1:port1 -p host_port2:port2 -p host_port3:port3 image  
 端口映射是docker比较重要的一个功能，原因在于我们每次运行容器的时候容器的IP地址不能指定而是在桥接网卡的地址范围内随机生成的。宿主机器的IP地址是固定的，我们可以将容器的端口的映射到宿主机器上的一个端口，免去每次访问容器中的某个服务时都要查看容器的IP的地址。对于一个运行的容器，可以使用docker port加上容器中需要映射的端口和容器的ID来查看该端口号在宿主机器上的映射端口。
 
@@ -144,25 +144,25 @@ FROM ubuntu:13.10
   
 MAINTAINER zing wang "zing.jian.wang@gmail.com"  
   
-# update source  
+\# update source  
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe"> /etc/apt/sources.list  
 RUN apt-get update  
   
-# Install curl  
+\# Install curl  
 RUN apt-get -y install curl  
   
-# Install JDK 7  
+\# Install JDK 7  
 RUN cd /tmp &&  curl -L 'http://download.oracle.com/otn-pub/java/jdk/7u65-b17/jdk-7u65-linux-x64.tar.gz' -H 'Cookie: oraclelicense=accept-securebackup-cookie; gpw_e24=Dockerfile' | tar -xz  
 RUN mkdir -p /usr/lib/jvm  
 RUN mv /tmp/jdk1.7.0_65/ /usr/lib/jvm/java-7-oracle/  
   
-# Set Oracle JDK 7 as default Java  
+\# Set Oracle JDK 7 as default Java  
 RUN update-alternatives --install /usr/bin/java java /usr/lib/jvm/java-7-oracle/bin/java 300     
 RUN update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/java-7-oracle/bin/javac 300     
   
 ENV JAVA_HOME /usr/lib/jvm/java-7-oracle/  
   
-# Install tomcat7  
+\# Install tomcat7  
 RUN cd /tmp && curl -L 'http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.8/bin/apache-tomcat-7.0.8.tar.gz' | tar -xz  
 RUN mv /tmp/apache-tomcat-7.0.8/ /opt/tomcat7/  
   
@@ -172,10 +172,10 @@ ENV PATH $PATH:$CATALINA_HOME/bin
 ADD tomcat7.sh /etc/init.d/tomcat7  
 RUN chmod 755 /etc/init.d/tomcat7  
   
-# Expose ports.  
+\# Expose ports.  
 EXPOSE 8080  
   
-# Define default command.  
+\# Define default command.  
 ENTRYPOINT service tomcat7 start && tail -f /opt/tomcat7/logs/catalina.out  
 
 tomcat7.sh
