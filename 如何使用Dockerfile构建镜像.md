@@ -80,7 +80,7 @@ docker run -p port1 image
   
 \# 映射多个端口  
 EXPOSE port1 port2 port3  
-# 相应的运行容器使用的命令  
+\# 相应的运行容器使用的命令  
 docker run -p port1 -p port2 -p port3 image  
 \# 还可以指定需要映射到宿主机器上的某个端口号  
 docker run -p host_port1:port1 -p host_port2:port2 -p host_port3:port3 image  
@@ -138,8 +138,8 @@ ONBUILD 指定的命令在构建镜像时并不执行，而是在它的子镜像
 ### 2. 创建Dockerfile，构建jdk+tomcat环境
 
 Dockerfile文件
-[html] view plain copy
-# Pull base image  
+<code> 
+\# Pull base image  
 FROM ubuntu:13.10  
   
 MAINTAINER zing wang "zing.jian.wang@gmail.com"  
@@ -177,9 +177,10 @@ EXPOSE 8080
   
 \# Define default command.  
 ENTRYPOINT service tomcat7 start && tail -f /opt/tomcat7/logs/catalina.out  
+</code>
 
 tomcat7.sh
-[plain] view plain copy
+<code>
 export JAVA_HOME=/usr/lib/jvm/java-7-oracle/  
 export TOMCAT_HOME=/opt/tomcat7  
   
@@ -196,6 +197,7 @@ restart)
 ;;  
 esac  
 exit 0  
+</code>
 
 我已经把这些文件上传到了Github https://github.com/agileshell/dockerfile-jdk-tomcat.git
 
