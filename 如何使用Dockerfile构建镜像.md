@@ -126,7 +126,7 @@ container1为第一个容器的ID，image2为第二个容器运行image的名字
 WORKDIR /path/to/workdir  
 
 [plain] view plain copy
-# 在 /p1/p2 下执行 vim a.txt  
+\# 在 /p1/p2 下执行 vim a.txt  
 WORKDIR /p1 WORKDIR p2 RUN vim a.txt  
 
 #### （12）ONBUILD（在子镜像中执行）
@@ -138,6 +138,7 @@ ONBUILD 指定的命令在构建镜像时并不执行，而是在它的子镜像
 ### 2. 创建Dockerfile，构建jdk+tomcat环境
 
 Dockerfile文件
+
 <code> 
 \# Pull base image  
 FROM ubuntu:13.10  
@@ -179,7 +180,8 @@ EXPOSE 8080
 ENTRYPOINT service tomcat7 start && tail -f /opt/tomcat7/logs/catalina.out  
 </code>
 
-tomcat7.sh
+<em> tomcat7.sh  </em>
+
 <code>
 export JAVA_HOME=/usr/lib/jvm/java-7-oracle/  
 export TOMCAT_HOME=/opt/tomcat7  
@@ -202,10 +204,16 @@ exit 0
 我已经把这些文件上传到了Github https://github.com/agileshell/dockerfile-jdk-tomcat.git
 
 ### 3. 构建镜像
+
 脚本写好了，需要转换成镜像：
-[plain] view plain copy
-docker build -t zingdocker/jdk-tomcat .  
-docker run -d -p 8090:8080 zingdocker/jdk-tomcat  
+<code>
+
+docker build -t zingdocker/jdk-tomcat . 
+
+docker run -d -p 8090:8080 zingdocker/jdk-tomcat 
+
+</code>
+
 
 默认情况下，tomcat会占用8080端口，刚才在启动container的时候，指定了 -p 8090:8080，映射到宿主机端口就是8090。
 http://<host>:8090 host为主机IP
