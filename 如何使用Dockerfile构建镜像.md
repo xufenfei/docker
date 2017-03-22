@@ -95,6 +95,7 @@ ENTRYPOINT ["memcached", "-u", "daemon"]
 
 
 #### （7）EXPOSE（指定容器需要映射到宿主机器的端口）
+
 设置指令，该指令会将容器中的端口映射成宿主机器中的某个端口。当你需要访问容器的时候，可以不是用容器的IP地址而是使用宿主机器的IP地址和映射后的端口。要完成整个操作需要两个步骤，首先在Dockerfile使用EXPOSE设置需要映射的容器端口，然后在运行容器的时候指定-p选项加上EXPOSE设置的端口，这样EXPOSE设置的端口号会被随机映射成宿主机器中的一个端口号。也可以指定需要映射到宿主机器的那个端口，这时要确保宿主机器上的端口号没有被使用。EXPOSE指令可以一次设置多个端口号，相应的运行容器的时候，可以配套的多次使用-p选项。
 
 格式:
@@ -161,33 +162,43 @@ ADD \<src>\<dest>
 
 VOLUME ["\<mountpoint>"]  
 
-[plain] view plain copy
-FROM base  
-VOLUME ["/tmp/data"]  
+
+FROM base
+
+VOLUME ["/tmp/data"]
+
 运行通过该Dockerfile生成image的容器，/tmp/data目录中的数据在容器关闭后，里面的数据还存在。例如另一个容器也有持久化数据的需求，且想使用上面容器共享的/tmp/data目录，那么可以运行下面的命令启动一个容器：
-[plain] view plain copy
-docker run -t -i -rm -volumes-from container1 image2 bash  
+
+
+docker run -t -i -rm -volumes-from container1 image2 bash 
+
 container1为第一个容器的ID，image2为第二个容器运行image的名字。
 
 #### （11）WORKDIR（切换目录）
 设置指令，可以多次切换(相当于cd命令)，对RUN,CMD,ENTRYPOINT生效。
 格式:
-[plain] view plain copy
+
 WORKDIR /path/to/workdir  
 
-[plain] view plain copy
+
 \# 在 /p1/p2 下执行 vim a.txt  
+
 WORKDIR /p1 WORKDIR p2 RUN vim a.txt  
 
 #### （12）ONBUILD（在子镜像中执行）
-[plain] view plain copy
-ONBUILD \<Dockerfile关键字>  
+
+
+ONBUILD \<Dockerfile关键字>
+
 ONBUILD 指定的命令在构建镜像时并不执行，而是在它的子镜像中执行。
+
 详细资料可参考https://www.dockboard.org/docker-quicktip-3-onbuild
+
 
 ### 2. 创建Dockerfile，构建jdk+tomcat环境
 
-Dockerfile文件
+<em> Dockerfile文件 </em>
+
 
 <code> 
 
