@@ -96,7 +96,9 @@ ENV <key> <value>
 假如你安装了JAVA程序，需要设置JAVA_HOME，那么可以在Dockerfile中这样写：
 ENV JAVA_HOME /path/to/java/dirent
 
+
 ####（9）ADD（从src复制文件到container的dest路径）
+
 构建指令，所有拷贝到container中的文件和文件夹权限为0755，uid和gid为0；如果是一个目录，那么会将该目录下的所有文件添加到container中，不包括目录；如果文件是可识别的压缩格式，则docker会帮忙解压缩（注意压缩格式）；如果<src>是文件且<dest>中不使用斜杠结束，则会将<dest>视为文件，<src>的内容会写入<dest>；如果<src>是文件且<dest>中使用斜杠结束，则会<src>文件拷贝到<dest>目录下。
 格式:
 [plain] view plain copy
@@ -140,6 +142,7 @@ ONBUILD 指定的命令在构建镜像时并不执行，而是在它的子镜像
 Dockerfile文件
 
 <code> 
+
 \# Pull base image  
 FROM ubuntu:13.10  
   
@@ -179,26 +182,40 @@ EXPOSE 8080
 \# Define default command.  
 ENTRYPOINT service tomcat7 start && tail -f /opt/tomcat7/logs/catalina.out  
 </code>
-
+---------------------------------------------------------------------------
 <em> tomcat7.sh  </em>
 
 <code>
-export JAVA_HOME=/usr/lib/jvm/java-7-oracle/  
+export JAVA_HOME=/usr/lib/jvm/java-7-oracle/ 
+
 export TOMCAT_HOME=/opt/tomcat7  
   
-case $1 in  
+case $1 in 
+
 start)  
-  sh $TOMCAT_HOME/bin/startup.sh  
+
+  sh $TOMCAT_HOME/bin/startup.sh 
+  
 ;;  
-stop)  
+
+stop) 
+
   sh $TOMCAT_HOME/bin/shutdown.sh  
+  
 ;;  
+
 restart)  
+
   sh $TOMCAT_HOME/bin/shutdown.sh  
+  
   sh $TOMCAT_HOME/bin/startup.sh  
+  
 ;;  
-esac  
-exit 0  
+
+esac 
+
+exit 0 
+
 </code>
 
 我已经把这些文件上传到了Github https://github.com/agileshell/dockerfile-jdk-tomcat.git
