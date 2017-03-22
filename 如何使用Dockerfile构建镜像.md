@@ -100,7 +100,7 @@ ENTRYPOINT ["memcached", "-u", "daemon"]
 格式:
 
 
-EXPOSE <port> [<port>...]  
+EXPOSE \<port> [\<port>...]  
 
 
 \# 映射一个端口
@@ -132,7 +132,7 @@ docker run -p host_port1:port1 -p host_port2:port2 -p host_port3:port3 image
 
 格式:
 
-ENV <key> <value>  
+ENV \<key> \<value>  
 
 设置了后，后续的RUN命令都可以使用，container启动后，可以通过docker inspect查看这个环境变量，也可以通过在docker run --env key=value时设置或修改环境变量。
 
@@ -144,22 +144,22 @@ ENV JAVA_HOME /path/to/java/dirent
 
 #### （9）ADD（从src复制文件到container的dest路径）
 
-构建指令，所有拷贝到container中的文件和文件夹权限为0755，uid和gid为0；如果是一个目录，那么会将该目录下的所有文件添加到container中，不包括目录；如果文件是可识别的压缩格式，则docker会帮忙解压缩（注意压缩格式）；如果<src>是文件且<dest>中不使用斜杠结束，则会将<dest>视为文件，<src>的内容会写入<dest>；如果<src>是文件且<dest>中使用斜杠结束，则会<src>文件拷贝到<dest>目录下。
+构建指令，所有拷贝到container中的文件和文件夹权限为0755，uid和gid为0；如果是一个目录，那么会将该目录下的所有文件添加到container中，不包括目录；如果文件是可识别的压缩格式，则docker会帮忙解压缩（注意压缩格式）；如果\<src>是文件且\<dest>中不使用斜杠结束，则会将\<dest>视为文件，\<src>的内容会写入\<dest>；如果\<src>是文件且\<dest>中使用斜杠结束，则会\<src>文件拷贝到\<dest>目录下。
 格式:
 
 
-ADD <src> <dest>  
+ADD \<src>\<dest>  
 
 
-<src> 是相对被构建的源目录的相对路径，可以是文件或目录的路径，也可以是一个远程的文件url;
+\<src> 是相对被构建的源目录的相对路径，可以是文件或目录的路径，也可以是一个远程的文件url;
 
-<dest> 是container中的绝对路径
+\<dest> 是container中的绝对路径
 
 #### （10）VOLUME（指定挂载点)）
 设置指令，使容器中的一个目录具有持久化存储数据的功能，该目录可以被容器本身使用，也可以共享给其他容器使用。我们知道容器使用的是AUFS，这种文件系统不能持久化数据，当容器关闭后，所有的更改都会丢失。当容器中的应用有持久化数据的需求时可以在Dockerfile中使用该指令。
 格式:
-[plain] view plain copy
-VOLUME ["<mountpoint>"]  
+
+VOLUME ["\<mountpoint>"]  
 
 [plain] view plain copy
 FROM base  
@@ -181,7 +181,7 @@ WORKDIR /p1 WORKDIR p2 RUN vim a.txt
 
 #### （12）ONBUILD（在子镜像中执行）
 [plain] view plain copy
-ONBUILD <Dockerfile关键字>  
+ONBUILD \<Dockerfile关键字>  
 ONBUILD 指定的命令在构建镜像时并不执行，而是在它的子镜像中执行。
 详细资料可参考https://www.dockboard.org/docker-quicktip-3-onbuild
 
@@ -297,6 +297,6 @@ docker run -d -p 8090:8080 zingdocker/jdk-tomcat
 
 
 默认情况下，tomcat会占用8080端口，刚才在启动container的时候，指定了 -p 8090:8080，映射到宿主机端口就是8090。
-http://<host>:8090 host为主机IP
+http://\<host>:8090 host为主机IP
 
 来源： http://blog.csdn.net/we_shell/article/details/38445979
