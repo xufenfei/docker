@@ -216,6 +216,7 @@ RUN mkdir -p /usr/lib/jvm
 RUN mv /tmp/jdk1.7.0_65/ /usr/lib/jvm/java-7-oracle/  
   
 \# Set Oracle JDK 7 as default Java  
+
 RUN update-alternatives --install /usr/bin/java java /usr/lib/jvm/java-7-oracle/bin/java 300  
 
 RUN update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/java-7-oracle/bin/javac 300     
@@ -223,6 +224,7 @@ RUN update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/java-7-oracl
 ENV JAVA_HOME /usr/lib/jvm/java-7-oracle/  
   
 \# Install tomcat7  
+
 RUN cd /tmp && curl -L 'http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.8/bin/apache-tomcat-7.0.8.tar.gz' | tar -xz  
 
 RUN mv /tmp/apache-tomcat-7.0.8/ /opt/tomcat7/  
@@ -283,6 +285,7 @@ exit 0
 </code>
 
 我已经把这些文件上传到了Github https://github.com/agileshell/dockerfile-jdk-tomcat.git
+
 
 ### 3. 构建镜像
 
