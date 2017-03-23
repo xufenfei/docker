@@ -25,6 +25,7 @@ FROM \<image>
 
 FROM  \<image>:\<tag>  
 
+
 <\code>
 
 指定基础image为该image的一个tag版本。
