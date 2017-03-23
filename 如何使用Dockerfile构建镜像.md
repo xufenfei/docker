@@ -19,10 +19,13 @@ Dockerfile的指令根据作用可以分为两种，构建指令和设置指令�
 #### （1）FROM（指定基础image）
 构建指令，必须指定且需要在Dockerfile其他指令的前面。后续的指令都依赖于该指令指定的image。FROM指令指定的基础image可以是官方远程仓库中的，也可以位于本地仓库。
 
+<code>
 
 FROM \<image>  
 
 FROM  \<image>:\<tag>  
+
+<\code>
 
 指定基础image为该image的一个tag版本。
 
